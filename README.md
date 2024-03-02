@@ -5,6 +5,7 @@
 - [Descripción](#descripción)
 - [Tecnologías y librerías](#tecnologías-y-servicios-usados)
 - [Funciones y características](#funciones-y-características)
+- [Imágenes](#imágenes)
 - [Contacto](#contacto)
 
 ## Descripción
