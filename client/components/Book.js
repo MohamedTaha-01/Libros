@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { Text, StyleSheet, Pressable } from "react-native";
 import StyleList from "../styles/StyleList";
 
+/* Book card */
 export default function Book({ navigation, book }) {
   return (
     <Pressable
@@ -9,9 +10,11 @@ export default function Book({ navigation, book }) {
         navigation.navigate("EditBook", { title: book.title, bookId: book.id })
       }
     >
+      {/* book title */}
       <Text style={[styles.book_card__text, styles.book_card__title]}>
         {book.title}
       </Text>
+      {/* book author */}
       <Text style={[styles.book_card__text, styles.book_card__author]}>
         {book.author}
       </Text>

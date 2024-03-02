@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Form from "../components/Form";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import StyleList from "../styles/StyleList";
 
+/* Includes the form component and passes editBookFunction to run it when the form is submitted. */
 export default function EditBook({ navigation, route }) {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // PUT request Function that the form will run when submitted
+  // PUT /books/:id request function
   const editBookFunction = async (author, title) => {
     try {
       fetch(`http://192.168.1.40:3000/books/${route.params.bookId}`, {
@@ -26,6 +27,7 @@ export default function EditBook({ navigation, route }) {
     }
   };
 
+  // DELETE /books/:id request function
   const deleteBookFunction = async () => {
     try {
       fetch(`http://192.168.1.40:3000/books/${route.params.bookId}`, {
@@ -40,7 +42,7 @@ export default function EditBook({ navigation, route }) {
     }
   };
 
-  // Get book with bookId
+  // GET /books/:id request function
   useEffect(() => {
     const fetchBook = async () => {
       setLoading(true);

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 module.exports = function (db) {
+  // Routes for /books/
   router
     .route("/")
     // GET /books
@@ -40,6 +41,7 @@ module.exports = function (db) {
       }
     });
 
+  // Routes for /books/:id
   router
     .route("/:id")
     // GET /books/:id

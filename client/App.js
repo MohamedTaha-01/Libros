@@ -1,11 +1,11 @@
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Main from "./pages/Main";
 import CreateBook from "./pages/CreateBook";
-import StyleList from "./styles/StyleList";
 import EditBook from "./pages/EditBook";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from "react-native";
+import StyleList from "./styles/StyleList";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +19,7 @@ export default function App() {
             component={Main}
             options={{
               title: "Libros",
-              ...headerStyle,
+              ...headerOptions,
             }}
           />
           <Stack.Screen
@@ -27,7 +27,7 @@ export default function App() {
             component={CreateBook}
             options={{
               title: "Añadir libro",
-              ...headerStyle,
+              ...headerOptions,
             }}
           />
           <Stack.Screen
@@ -35,7 +35,7 @@ export default function App() {
             component={EditBook}
             initialParams={{ name: "Editar libro" }}
             options={({ route }) => ({
-              ...headerStyle,
+              ...headerOptions,
               title: route.params.title,
             })}
           />
@@ -46,7 +46,7 @@ export default function App() {
 }
 
 // Header style
-const headerStyle = {
+const headerOptions = {
   headerStyle: { backgroundColor: StyleList.COLOR_DARK },
   headerTintColor: StyleList.COLOR_LIGHT,
   headerTitleStyle: {
@@ -67,5 +67,5 @@ const theme = {
 };
 
 const styles = StyleSheet.create({
-  app_container: { flex: 1, backgroundColor: "#212121" },
+  app_container: { flex: 1, backgroundColor: StyleList.COLOR_DARK },
 });

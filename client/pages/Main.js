@@ -6,16 +6,16 @@ import {
   ScrollView,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import Book from "../components/Book";
 import StyleList from "../styles/StyleList";
-import { useIsFocused } from "@react-navigation/native";
 
 export default function Main({ navigation }) {
   const [books, setBooks] = useState([]);
-  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
+  const isFocused = useIsFocused();
 
-  // make GET /books request
+  // GET /books request
   const fetchBooks = async () => {
     setLoading(true);
     try {
@@ -46,7 +46,7 @@ export default function Main({ navigation }) {
           ))
         )}
       </ScrollView>
-      {/* add button */}
+      {/* add book button */}
       <Pressable
         style={styles.add_button}
         onPress={() => navigation.navigate("CreateBook")}

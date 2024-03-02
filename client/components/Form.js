@@ -5,11 +5,13 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import StyleList from "../styles/StyleList";
 
 /**
- * Form component with 2 fields: Title and Author, and validation functions.
+ * Form component for creating and modifying books.
+ * @param submitButtonFunction function to run when the form is submitted
+ * @param deleteFunction if not null, enables delete button and runs the function when pressed
  */
 export default function Form({
   submitButtonText,
@@ -61,11 +63,11 @@ export default function Form({
     <SafeAreaView style={styles.container}>
       {/* TITLE */}
       <Text style={styles.label}>Título del libro</Text>
-      {/* error message */}
+      {/* title validation error message */}
       {showTitleError && showTitleError ? (
         <Text style={styles.label_error}>Título no válido</Text>
       ) : null}
-      {/* input */}
+      {/* title input */}
       <TextInput
         value={title}
         style={styles.input}
@@ -75,11 +77,11 @@ export default function Form({
       />
       {/* AUTHOR */}
       <Text style={styles.label}>Autor del libro</Text>
-      {/* error message */}
+      {/* author validation error message */}
       {showAuthorError && showAuthorError ? (
         <Text style={styles.label_error}>Autor no válido</Text>
       ) : null}
-      {/* input */}
+      {/* author input */}
       <TextInput
         value={author}
         style={styles.input}
@@ -87,7 +89,7 @@ export default function Form({
           changeAuthor(author);
         }}
       />
-      {/* Form submit button (create or modify) */}
+      {/* Form submit button. Calls the function received from the page */}
       <Pressable
         style={[styles.form_button, styles.create_button]}
         onPress={submitForm}

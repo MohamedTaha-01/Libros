@@ -1,7 +1,8 @@
 import Form from "../components/Form";
 
+/* Includes the form component and passes createBookFunction to run it when the form is submitted */
 export default function CreateBook({ navigation }) {
-  // POST request function that the form will run when submitted
+  // POST /books request function
   const createBookFunction = async (author, title) => {
     try {
       const response = await fetch("http://192.168.1.40:3000/books", {
