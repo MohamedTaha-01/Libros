@@ -12,11 +12,11 @@ module.exports = function (db) {
           id: book.id,
           ...book.data(),
         }));
+        // return books
         res.json(books);
       } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ msg: error.message });
       }
-      // return books
     })
     // POST /books
     .post(async (req, res) => {
@@ -31,13 +31,13 @@ module.exports = function (db) {
         }
         // add book to db
         await db.collection("books").add({
-          title,
-          author,
+          title: title.trim(),
+          author: author.trim(),
         });
+        res.json({ msg: "ok" });
       } catch (error) {
         res.status(400).json({ msg: error.message });
       }
-      res.json({ msg: "ok" });
     });
 
   router
@@ -48,7 +48,7 @@ module.exports = function (db) {
         const book = await db.collection("books").doc(req.params.id).get();
         res.json(book.data());
       } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ msg: error.message });
       }
     })
     // PUT /books/:id
@@ -59,19 +59,19 @@ module.exports = function (db) {
           .collection("books")
           .doc(req.params.id)
           .update({ title, author });
+        res.json({ msg: "ok" });
       } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ msg: error.message });
       }
-      res.send("ok");
     })
     // DELETE /books/:id
     .delete(async (req, res) => {
       try {
         await db.collection("books").doc(req.params.id).delete();
+        res.json({ msg: "ok" });
       } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json({ msg: error.message });
       }
-      res.send("ok");
     });
 
   return router;
