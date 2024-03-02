@@ -8,13 +8,18 @@ import {
 import { useState, useEffect } from "react";
 import StyleList from "../styles/StyleList";
 
+/**
+ * Form component with 2 fields: Title and Author, and validation functions.
+ */
 export default function Form({
-  navigation,
   submitButtonText,
   submitButtonFunction,
+  bookTitle,
+  bookAuthor,
+  deleteFunction,
 }) {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState(bookTitle ?? "");
+  const [author, setAuthor] = useState(bookAuthor ?? "");
   const [showTitleError, setShowTitleError] = useState(false);
   const [showAuthorError, setShowAuthorError] = useState(false);
 
@@ -45,28 +50,13 @@ export default function Form({
     }
   };
 
-  // Validate and post
+  // If validation correct call submitButtonFunction
   const submitForm = async () => {
     if (validateTitle() && validateAuthor()) {
-      try {
-        const response = await fetch("http://192.168.1.40:3000/books", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ author, title }),
-        });
-        const result = await response.json();
-        if (response.ok) {
-          navigation.goBack();
-        } else {
-          console.log(result.msg);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      submitButtonFunction(author, title);
     }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* TITLE */}
@@ -97,9 +87,24 @@ export default function Form({
           changeAuthor(author);
         }}
       />
-      <Pressable style={styles.create_button} onPress={submitForm}>
-        <Text style={styles.create_button__text}>{submitButtonText}</Text>
+      {/* Form submit button (create or modify) */}
+      <Pressable
+        style={[styles.form_button, styles.create_button]}
+        onPress={submitForm}
+      >
+        <Text style={styles.form_button__text}>{submitButtonText}</Text>
       </Pressable>
+      {/* Delete button */}
+      {deleteFunction ? (
+        <Pressable
+          style={[styles.form_button, styles.delete_button]}
+          onPress={() => {
+            deleteFunction();
+          }}
+        >
+          <Text style={styles.form_button__text}>Eliminar</Text>
+        </Pressable>
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
   label_error: {
     width: "100%",
     fontSize: StyleList.SIZE_SMALL,
-    color: "#e57373",
+    color: StyleList.COLOR_RED,
     marginBottom: StyleList.SIZE_SMALL,
   },
   input: {
@@ -132,15 +137,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: StyleList.COLOR_LIGHT,
   },
-  create_button: {
+  form_button: {
     width: "100%",
     marginTop: StyleList.SIZE_BIG,
     padding: StyleList.SIZE_SMALL,
     borderRadius: 50,
-
+  },
+  create_button: {
     backgroundColor: StyleList.COLOR_PRIMARY,
   },
-  create_button__text: {
+  delete_button: {
+    backgroundColor: StyleList.COLOR_RED,
+  },
+  form_button__text: {
     textAlign: "center",
     color: StyleList.COLOR_DARK,
     fontSize: StyleList.SIZE_MEDIUM,
