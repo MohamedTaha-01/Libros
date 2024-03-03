@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { SafeAreaView, Text, TextInput } from "react-native";
 import FormButton from "../components/FormButton";
-import { SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
 import StyleList from "../styles/StyleList";
+import { mainStyles } from "../styles/MainStyles";
 
 /* Includes the form component and passes createBookFunction to run it when the form is submitted */
 export default function CreateBook({ navigation }) {
@@ -33,6 +34,7 @@ export default function CreateBook({ navigation }) {
     }
   };
 
+  // call validation functions and call POST request function
   const handleCreateBook = () => {
     validateTitle(title);
     validateAuthor(author);
@@ -64,20 +66,20 @@ export default function CreateBook({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={mainStyles.container}>
       {/*
        * ---------- TITLE ----------
        *  */}
-      <Text style={styles.label}>Título del libro</Text>
+      <Text style={mainStyles.label}>Título del libro</Text>
       {/* title validation error message */}
       {titleError && titleError ? (
-        <Text style={styles.label_error}>Título no válido</Text>
+        <Text style={mainStyles.label_error}>Título no válido</Text>
       ) : null}
       {/* title input */}
       <TextInput
         value={title}
         style={[
-          styles.input,
+          mainStyles.input,
           titleError ? { borderBottomColor: StyleList.COLOR_RED } : "",
         ]}
         onChangeText={(title) => handleTitleChange(title)}
@@ -88,16 +90,16 @@ export default function CreateBook({ navigation }) {
       {/*
        * ---------- AUTHOR ----------
        *  */}
-      <Text style={styles.label}>Autor del libro</Text>
+      <Text style={mainStyles.label}>Autor del libro</Text>
       {/* author validation error message */}
       {authorError && authorError ? (
-        <Text style={styles.label_error}>Autor no válido</Text>
+        <Text style={mainStyles.label_error}>Autor no válido</Text>
       ) : null}
       {/* author input */}
       <TextInput
         value={author}
         style={[
-          styles.input,
+          mainStyles.input,
           authorError ? { borderBottomColor: StyleList.COLOR_RED } : "",
         ]}
         onChangeText={(author) => handleAuthorChange(author)}
@@ -115,33 +117,3 @@ export default function CreateBook({ navigation }) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flex: 1,
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: StyleList.COLOR_DARK,
-  },
-  label: {
-    width: "100%",
-    fontSize: StyleList.SIZE_SMALL,
-    color: StyleList.COLOR_LIGHT,
-    marginTop: StyleList.SIZE_BIG,
-    marginBottom: StyleList.SIZE_SMALL,
-  },
-  label_error: {
-    width: "100%",
-    fontSize: StyleList.SIZE_SMALL,
-    color: StyleList.COLOR_RED,
-    marginBottom: StyleList.SIZE_SMALL,
-  },
-  input: {
-    width: "100%",
-    fontSize: StyleList.SIZE_MEDIUM,
-    color: StyleList.COLOR_LIGHT,
-    borderBottomWidth: 1,
-    borderBottomColor: StyleList.COLOR_LIGHT,
-  },
-});

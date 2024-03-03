@@ -6,19 +6,20 @@ import {
   ScrollView,
 } from "react-native";
 import Book from "../components/Book";
-import StyleList from "../styles/StyleList";
 import useGetBooks from "../hooks/useGetBooks";
+import { mainStyles } from "../styles/MainStyles";
+import StyleList from "../styles/StyleList";
 
 export default function Main({ navigation }) {
   // GET /books hook
   const { books, loading } = useGetBooks();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={mainStyles.container}>
       {/* book list */}
       <ScrollView style={styles.book_list}>
         {loading ? (
-          <Text style={styles.text_loading}>Cargando...</Text>
+          <Text style={mainStyles.text_loading}>Cargando...</Text>
         ) : (
           books &&
           books.map((book, i) => (
@@ -38,21 +39,8 @@ export default function Main({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flex: 1,
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: StyleList.COLOR_DARK,
-  },
   book_list: {
     width: "100%",
-  },
-  text_loading: {
-    padding: 32,
-    textAlign: "center",
-    color: StyleList.COLOR_LIGHT,
-    fontSize: StyleList.SIZE_SMALL,
   },
   add_button: {
     width: 80,

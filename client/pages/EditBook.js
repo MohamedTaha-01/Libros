@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput } from "react-native";
-import StyleList from "../styles/StyleList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormButton from "../components/FormButton";
 import useGetBookWithID from "../hooks/useGetBookWithID";
+import { mainStyles } from "../styles/MainStyles";
+import StyleList from "../styles/StyleList";
 
 /* Includes the form component and passes editBookFunction to run it when the form is submitted. */
 export default function EditBook({ navigation, route }) {
@@ -84,24 +85,24 @@ export default function EditBook({ navigation, route }) {
     <>
       {/* When book is fetched show the form */}
       {loading ? (
-        <Text style={styles.text_loading}>Cargando...</Text>
+        <Text style={mainStyles.text_loading}>Cargando...</Text>
       ) : book ? (
         modifying ? (
           // when modifying show the form
-          <SafeAreaView style={styles.container}>
+          <SafeAreaView style={mainStyles.container}>
             {/*
              * ---------- TITLE ----------
              *  */}
-            <Text style={styles.label}>Título del libro</Text>
+            <Text style={mainStyles.label}>Título del libro</Text>
             {/* title validation error message */}
             {titleError && titleError ? (
-              <Text style={styles.label_error}>Título no válido</Text>
+              <Text style={mainStyles.label_error}>Título no válido</Text>
             ) : null}
             {/* title input */}
             <TextInput
               value={title}
               style={[
-                styles.input,
+                mainStyles.input,
                 titleError ? { borderBottomColor: StyleList.COLOR_RED } : "",
               ]}
               onChangeText={(title) => handleTitleChange(title)}
@@ -112,16 +113,16 @@ export default function EditBook({ navigation, route }) {
             {/*
              * ---------- AUTHOR ----------
              *  */}
-            <Text style={styles.label}>Autor del libro</Text>
+            <Text style={mainStyles.label}>Autor del libro</Text>
             {/* author validation error message */}
             {authorError && authorError ? (
-              <Text style={styles.label_error}>Autor no válido</Text>
+              <Text style={mainStyles.label_error}>Autor no válido</Text>
             ) : null}
             {/* author input */}
             <TextInput
               value={author}
               style={[
-                styles.input,
+                mainStyles.input,
                 authorError ? { borderBottomColor: StyleList.COLOR_RED } : "",
               ]}
               onChangeText={(author) => handleAuthorChange(author)}
@@ -146,7 +147,7 @@ export default function EditBook({ navigation, route }) {
           </SafeAreaView>
         ) : (
           // when not modifying show the book info
-          <SafeAreaView style={styles.container}>
+          <SafeAreaView style={mainStyles.container}>
             <Text style={styles.details_header}>Título</Text>
             <Text style={styles.details_data}>{book.title}</Text>
             <Text style={styles.details_header}>Autor</Text>
@@ -173,19 +174,6 @@ export default function EditBook({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flex: 1,
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: StyleList.COLOR_DARK,
-  },
-  text_loading: {
-    padding: 32,
-    textAlign: "center",
-    color: StyleList.COLOR_LIGHT,
-    fontSize: StyleList.SIZE_SMALL,
-  },
   details_header: {
     width: "100%",
     fontSize: StyleList.SIZE_MEDIUM,
@@ -197,25 +185,5 @@ const styles = StyleSheet.create({
     fontSize: StyleList.SIZE_SMALL,
     color: StyleList.COLOR_LIGHT,
     marginTop: StyleList.SIZE_SMALL,
-  },
-  label: {
-    width: "100%",
-    fontSize: StyleList.SIZE_SMALL,
-    color: StyleList.COLOR_LIGHT,
-    marginTop: StyleList.SIZE_BIG,
-    marginBottom: StyleList.SIZE_SMALL,
-  },
-  label_error: {
-    width: "100%",
-    fontSize: StyleList.SIZE_SMALL,
-    color: StyleList.COLOR_RED,
-    marginBottom: StyleList.SIZE_SMALL,
-  },
-  input: {
-    width: "100%",
-    fontSize: StyleList.SIZE_MEDIUM,
-    color: StyleList.COLOR_LIGHT,
-    borderBottomWidth: 1,
-    borderBottomColor: StyleList.COLOR_LIGHT,
   },
 });
