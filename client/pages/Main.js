@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   text_loading: {
     padding: 32,
+    textAlign: "center",
     color: StyleList.COLOR_LIGHT,
     fontSize: StyleList.SIZE_SMALL,
   },

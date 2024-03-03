@@ -100,7 +100,10 @@ export default function EditBook({ navigation, route }) {
             {/* title input */}
             <TextInput
               value={title}
-              style={styles.input}
+              style={[
+                styles.input,
+                titleError ? { borderBottomColor: StyleList.COLOR_RED } : "",
+              ]}
               onChangeText={(title) => handleTitleChange(title)}
               onBlur={() => {
                 validateTitle(title);
@@ -117,7 +120,10 @@ export default function EditBook({ navigation, route }) {
             {/* author input */}
             <TextInput
               value={author}
-              style={styles.input}
+              style={[
+                styles.input,
+                authorError ? { borderBottomColor: StyleList.COLOR_RED } : "",
+              ]}
               onChangeText={(author) => handleAuthorChange(author)}
               onBlur={() => {
                 validateAuthor(author);
@@ -135,7 +141,7 @@ export default function EditBook({ navigation, route }) {
               pressFunction={() => {
                 setModifying(false);
               }}
-              color={StyleList.COLOR_PRIMARY}
+              color={StyleList.COLOR_RED}
             />
           </SafeAreaView>
         ) : (
