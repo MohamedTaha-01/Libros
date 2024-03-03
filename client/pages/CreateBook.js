@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FormButton from "../components/FormButton";
 import { SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
+import StyleList from "../styles/StyleList";
 
 /* Includes the form component and passes createBookFunction to run it when the form is submitted */
 export default function CreateBook({ navigation }) {
@@ -33,6 +34,8 @@ export default function CreateBook({ navigation }) {
   };
 
   const handleCreateBook = () => {
+    validateTitle(title);
+    validateAuthor(author);
     if (!titleError && !authorError) {
       createBookFunction();
     }
@@ -51,12 +54,12 @@ export default function CreateBook({ navigation }) {
 
   // Validate title
   const validateTitle = (title) => {
-    if (!title.trim()) setTitleError(true);
+    if (!title || title === "" || !title.trim()) setTitleError(true);
     else setTitleError(false);
   };
   // Validate author
   const validateAuthor = (author) => {
-    if (!author.trim()) setAuthorError(true);
+    if (!author || author === "" || !author.trim()) setAuthorError(true);
     else setAuthorError(false);
   };
 
@@ -73,7 +76,10 @@ export default function CreateBook({ navigation }) {
       {/* title input */}
       <TextInput
         value={title}
-        style={styles.input}
+        style={[
+          styles.input,
+          titleError ? { borderBottomColor: StyleList.COLOR_RED } : "",
+        ]}
         onChangeText={(title) => handleTitleChange(title)}
         onBlur={() => {
           validateTitle(title);
@@ -90,7 +96,10 @@ export default function CreateBook({ navigation }) {
       {/* author input */}
       <TextInput
         value={author}
-        style={styles.input}
+        style={[
+          styles.input,
+          authorError ? { borderBottomColor: StyleList.COLOR_RED } : "",
+        ]}
         onChangeText={(author) => handleAuthorChange(author)}
         onBlur={() => {
           validateAuthor(author);
