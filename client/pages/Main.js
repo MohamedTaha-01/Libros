@@ -5,33 +5,13 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { useState, useEffect } from "react";
-import { useIsFocused } from "@react-navigation/native";
 import Book from "../components/Book";
 import StyleList from "../styles/StyleList";
+import useGetBooks from "../hooks/useGetBooks";
 
 export default function Main({ navigation }) {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const isFocused = useIsFocused();
-
-  // GET /books request
-  const fetchBooks = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("http://192.168.1.40:3000/books");
-      const result = await response.json();
-      setBooks(result || []);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
-  };
-
-  // fetch books
-  useEffect(() => {
-    fetchBooks();
-  }, [isFocused]);
+  // GET /books hook
+  const { books, loading } = useGetBooks();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,6 +56,7 @@ const styles = StyleSheet.create({
   add_button: {
     width: 80,
     height: 80,
+    margin: 16,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 100,
